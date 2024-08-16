@@ -1,7 +1,11 @@
 FROM python:3.9-slim-buster  # Base image
+
 WORKDIR /app
 
-COPY . app/.
-RUN pip3 install -r /app/requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-CMD ["uvicorn", "main:app","--host=0.0.0.0", "--port=8080","--reload"]
+COPY . .
+
+
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
