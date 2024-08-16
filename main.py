@@ -6,9 +6,6 @@ from models import CanInput
 app_version = "0.0.0"  # Store version information (optional)
 app = FastAPI(version=app_version)
 
-
-app = FastAPI(version="0.0.2")
-
 def query_bigquery(query):
     # Replace with your BigQuery project, dataset, and table
     client = bigquery.Client()
