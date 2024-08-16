@@ -1,13 +1,37 @@
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+import uvicorn
+from google.cloud import bigquery
 import os
 
-from flask import Flask
-app = Flask(__name__)
-app_version = "0.0.1"
+app = FastAPI(version="0.0.2")
 
-@app.route("/")
-def hello_world():
-    return f"Hello! This is version {app_version} of my application."
+def query_bigquery(query):
+    # Replace with your BigQuery project, dataset, and table
+    client = bigquery.Client()
+    query_job = client.query(query)
+    results = query_job.result()
+    return results
 
+def construct_query(data):
+    pass
+
+@app.get("/version")
+def get_version():
+    return {"app_version": app.version}
+
+@app.post("/input")
+async def query_data(request: Request):
+    data = await request.json()
+    # Extract query parameters from JSON data
+    uid = data['uid']
+    password = data['password']
+    query = construct_query(data)  # Function to build BigQuery query
+    # results = query_bigquery(query)
+    result = {"message":"successful",
+    "id":id,
+    "password":password}
+    return result
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    uvicorn.run("main:app",host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
