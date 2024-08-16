@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster  # Base image
+FROM python:3.9-slim-buster
 
 WORKDIR /app
 COPY requirements.txt requirements.txt
