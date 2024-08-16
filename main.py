@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 app = Flask(__name__)
-app_version = "0.0.0"
+app_version = "0.0.1"
 
 @app.route("/")
 def hello_world():
