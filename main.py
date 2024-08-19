@@ -6,11 +6,18 @@ from models import CanInput
 app_version = "0.0.0"  # Store version information (optional)
 app = FastAPI(version=app_version)
 
+#enable Short query optimized mode
+export QUERY_PREVIEW_ENABLED=TRUE
+  
+
 def query_bigquery(query):
     # Replace with your BigQuery project, dataset, and table
     client = bigquery.Client()
     query_job = client.query(query)
-    results = query_job.result()
+    rows = client.query_and_wait(query) #need to check the diff
+    
+    results = query_job.result
+    
     return results
 
 def construct_query(request):
